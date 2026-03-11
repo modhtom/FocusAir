@@ -9,3 +9,11 @@ export const speakPilot = (text) => {
     window.speechSynthesis.speak(utterance);
   }
 };
+
+export const playNotificationChime = () => {
+  try {
+    speakPilot("Session complete. You have arrived at your destination.");
+  } catch (err) {
+    console.error("Failed to play notification:", err);
+  }
+};
