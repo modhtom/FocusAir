@@ -118,38 +118,7 @@ const FlyingMode = ({ origin, destination, duration, missionGoal, squadCode, cur
     };
   }, []);
 
-  useEffect(() => {
-    if (paused || timeLeft <= 0) {
-      if (timeLeft <= 0) {
-        if (playEndSound !== false) playNotificationChime();
-        onFinish(duration, true);
-      }
-      if (pipWindowRef.current) {
-        const doc = pipWindowRef.current.document;
-        if (doc) {
-          const h1 = doc.querySelector('h1');
-          const p = doc.querySelector('p');
-          if (h1) h1.textContent = fmt(timeLeft);
-          if (p) {
-            p.textContent = paused ? "HOLDING" : "FLYING";
-            p.style.color = paused ? "#f59e0b" : "#10b981";
-          }
-        }
-      }
-      return;
-    }
 
-    const id = setInterval(() => {
-      setTimeLeft((prev) => {
-        const next = prev - 1;
-        const totalSecs = duration * 60;
-        const elapsed = totalSecs - next;
-        setProgress(elapsed / totalSecs);
-        return next;
-      });
-    }, 1000);
-    return () => clearInterval(id);
-  }, [paused, timeLeft, duration, onFinish]);
 
   useEffect(() => {
     if (pipWindowRef.current) {
